@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 	
 	Controller2D controller;
 
-	public float jumpHeight = 3.5f, timeToJumpApex = .4f, accelerationTimeAirbourne = .2f, accelerationTimeGrounded = .1f, moveSpeed = 20f;
+	public float jumpHeight = 3.5f, timeToJumpApex = .4f, accelerationTimeAirbourne = .2f, accelerationTimeGrounded = .1f, moveSpeed = 50f;
 	float gravity, jumpVelocity;
 
 	Rect left, jump, right;
@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 	[Range(1, 100)]
 	public float rectHeightPercentage = 12.5f;
 
-	float screenWidth, screenHeight, rectWidth, rectHeight;
+	float screenWidth, screenHeight, rectWidth, rectHeight, padding = 5f;
 
 	bool hasJumped = false;
 	
@@ -29,11 +29,14 @@ public class PlayerController : MonoBehaviour
 		screenWidth = Screen.width;
 		screenHeight = Screen.height;
 
-		rectWidth = screenWidth / 3;
+		rectWidth = (screenWidth / 3) - padding;
 		rectHeight = screenHeight / (100 / rectHeightPercentage);
 
 		Debug.Log ("Width_Screen/Rect: " + screenWidth + "/" + rectWidth + ". Height_Screen/Rect: " + screenHeight + "/" + rectHeight);
 
+		left = new Rect (0, 							0, rectWidth, rectHeight);
+		jump = new Rect (rectWidth + padding, 			0, rectWidth, rectHeight);
+		right = new Rect ((rectWidth * 2) + padding, 	0, rectWidth, rectHeight);
 
 		left = new Rect (0, 				0, rectWidth, rectHeight);
 		jump = new Rect (rectWidth, 		0, rectWidth, rectHeight);
@@ -80,15 +83,6 @@ public class PlayerController : MonoBehaviour
 
 	void Movement() {
 
-//		if ((Input.GetButton("Jump") || Input.GetMouseButtonDown(0)) && controller.collisions.below)
-//		{
-//
-//			velocity.y = jumpVelocity;
-//
-//			hasJumped = true;
-//
-//		}
-
 		if (Input.GetMouseButtonDown (0)) {
 
 			if (left.Contains (Input.mousePosition)) {
@@ -114,13 +108,18 @@ public class PlayerController : MonoBehaviour
 
 		float targetVelocityX = velocity.x * moveSpeed;
 
+		targetVelocityX = Mathf.Clamp (targetVelocityX, -moveSpeed, moveSpeed);
+
+		Debug.Log ("targetVelocityX: " + targetVelocityX + ", jumpVelocity: " + jumpVelocity + ", velocity: " +velocity);
+
 		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirbourne);
 		velocity.y += gravity * Time.deltaTime;
 		controller.Move (velocity * Time.deltaTime);
 
-		if (controller.collisions.below) {
-		
-			//velocity = Vector3.zero;
+
+		if (!Input.GetMouseButton (0)) {
+
+			velocity.x = 0f;
 
 		}
 
