@@ -9,15 +9,25 @@ public class PlayerController : MonoBehaviour
 	
 	Controller2D controller;
 
-	public float jumpHeight = 3.5f, timeToJumpApex = .4f, accelerationTimeAirbourne = .2f, accelerationTimeGrounded = .1f, moveSpeed = 50f;
+	[Header("Movement & Jumping")]
+	[Range(0.1f, 15f)]
+	public float jumpHeight = 3.5f;
+	[Range(0.01f, 3f)]
+	public float 	timeToJumpApex = .4f;
+	[Range(0.01f, 3f)]
+	public float accelerationTimeAirbourne = .2f;
+	[Range(0.01f, 3f)]
+	public float accelerationTimeGrounded = .1f;
+
+	[Range(0.01f, 0.3f)]
+	public float accelerometerDeadzone = 0.1f;
+
+	[Range(1f, 100f)]
+	public float moveSpeed = 50f;
+
 	float gravity, jumpVelocity;
 
-	Rect left, jump, right;
-
-	[Range(1, 100)]
-	public float rectHeightPercentage = 12.5f;
-
-	float screenWidth, screenHeight, rectWidth, rectHeight, padding = 5f;
+	float screenWidth, screenHeight, padding = 5f;
 
 	bool hasJumped = false;
 	
@@ -28,19 +38,6 @@ public class PlayerController : MonoBehaviour
 	{
 		screenWidth = Screen.width;
 		screenHeight = Screen.height;
-
-		rectWidth = (screenWidth / 3) - padding;
-		rectHeight = screenHeight / (100 / rectHeightPercentage);
-
-		Debug.Log ("Width_Screen/Rect: " + screenWidth + "/" + rectWidth + ". Height_Screen/Rect: " + screenHeight + "/" + rectHeight);
-
-		left = new Rect (0, 							0, rectWidth, rectHeight);
-		jump = new Rect (rectWidth + padding, 			0, rectWidth, rectHeight);
-		right = new Rect ((rectWidth * 2) + padding, 	0, rectWidth, rectHeight);
-
-		left = new Rect (0, 				0, rectWidth, rectHeight);
-		jump = new Rect (rectWidth, 		0, rectWidth, rectHeight);
-		right = new Rect (rectWidth * 2, 	0, rectWidth, rectHeight);
 
 		controller = GetComponent<Controller2D>();
 
@@ -83,34 +80,18 @@ public class PlayerController : MonoBehaviour
 
 	void Movement() {
 
-		if (Input.GetMouseButtonDown (0)) {
+		if (controller.collisions.below) {
 
-			if (left.Contains (Input.mousePosition)) {
-				Debug.Log ("Inside Left");
-
-				velocity.x = -1f;
-			}
-
-			if (jump.Contains (Input.mousePosition) && controller.collisions.below) {
-				Debug.Log ("Inside Jump");
-
-				velocity.y = jumpVelocity;
-				hasJumped = true;
-			}
-
-			if (right.Contains (Input.mousePosition)) {
-				Debug.Log ("Inside Right");
-
-				velocity.x = 1f;
-			}
+			velocity.y = jumpVelocity;
+			hasJumped = true;
 
 		}
+
+		velocity.x = (Input.acceleration.x > -accelerometerDeadzone && Input.acceleration.x < accelerometerDeadzone) ? 0f : Input.acceleration.x;
 
 		float targetVelocityX = velocity.x * moveSpeed;
 
 		targetVelocityX = Mathf.Clamp (targetVelocityX, -moveSpeed, moveSpeed);
-
-		Debug.Log ("targetVelocityX: " + targetVelocityX + ", jumpVelocity: " + jumpVelocity + ", velocity: " +velocity);
 
 		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirbourne);
 		velocity.y += gravity * Time.deltaTime;

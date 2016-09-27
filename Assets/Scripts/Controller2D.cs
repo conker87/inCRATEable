@@ -69,6 +69,12 @@ public class Controller2D : MonoBehaviour
 			
 			if (hit)
 			{
+				if (hit.collider.isTrigger) {
+
+					return;
+
+				}
+
 				float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
 				if (i == 0 && slopeAngle <= maxSlopeAngle)
@@ -121,9 +127,15 @@ public class Controller2D : MonoBehaviour
 			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 			
 			Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.cyan);
-			
+
 			if (hit)
 			{
+				if (hit.collider.isTrigger) {
+
+					return;
+
+				}
+
 				velocity.y = (hit.distance - skinWidth) * directionY;
 				rayLength = hit.distance;
 
