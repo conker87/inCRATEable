@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Platform_IgnoreCollisionsOnTriggerEnter : MonoBehaviour {
 
-	public string playerTag, originalName;
+	public string playerTag;
 	BoxCollider2D[] children;
 
 	void Start() {
@@ -15,7 +15,7 @@ public class Platform_IgnoreCollisionsOnTriggerEnter : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 
-		Debug.Log (other.tag);
+		Debug.Log (other.name + other.GetInstanceID() + ", tag: " + other.tag + ", pos: " + other.transform.position);
 
 		if (other.tag == playerTag) {
 
@@ -27,7 +27,7 @@ public class Platform_IgnoreCollisionsOnTriggerEnter : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D other) {
 
-		Debug.Log (other.tag);
+		Debug.Log (other.name + other.GetInstanceID() + ", tag: " + other.tag + ", pos: " + other.transform.position);
 
 		if (other.tag == playerTag) {
 
@@ -39,7 +39,7 @@ public class Platform_IgnoreCollisionsOnTriggerEnter : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D other) {
 
-		Debug.Log (other.tag);
+		Debug.Log (other.name + other.GetInstanceID() + ", tag: " + other.tag + ", pos: " + other.transform.position);
 
 		if (other.tag == playerTag) {
 
@@ -53,7 +53,9 @@ public class Platform_IgnoreCollisionsOnTriggerEnter : MonoBehaviour {
 
 		for (int i = 0; i < children.Length; i++) {
 
-			if (children [i].gameObject.name == originalName + children [i].gameObject.GetInstanceID ()) {
+			Debug.Log (children[i].name);
+
+			if (i == 0) {
 
 				continue;
 
