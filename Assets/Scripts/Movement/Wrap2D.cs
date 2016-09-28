@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Wrap2D : MonoBehaviour {
 
-	public float cutoffPosition = 5f;
+	public float wrapPosition = 5f;
 
 	// Use this for initialization
 	void Start () {
@@ -13,15 +13,15 @@ public class Wrap2D : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-		if (transform.position.x < -cutoffPosition) {
+		if (transform.position.x < -wrapPosition) {
 
-			transform.position = new Vector2 (cutoffPosition, transform.position.y);
+			transform.position = new Vector2 (wrapPosition, transform.position.y);
 
 		}
 
-		if (transform.position.x > cutoffPosition) {
+		if (transform.position.x > wrapPosition) {
 
-			transform.position = new Vector2 (-cutoffPosition, transform.position.y);
+			transform.position = new Vector2 (-wrapPosition, transform.position.y);
 
 		}
 
