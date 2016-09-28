@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 	[Range(0.01f, 3f)]
 	public float accelerationTimeGrounded = .1f;
 
-	[Range(0.01f, 0.3f)]
+	[Range(0f, 0.3f)]
 	public float accelerometerDeadzone = 0.1f;
 
 	[Range(1f, 100f)]
@@ -88,6 +88,12 @@ public class PlayerController : MonoBehaviour
 		}
 
 		velocity.x = (Input.acceleration.x > -accelerometerDeadzone && Input.acceleration.x < accelerometerDeadzone) ? 0f : Input.acceleration.x;
+
+		if (Input.GetAxisRaw("Horizontal") != 0f) {
+
+			velocity.x = Input.GetAxisRaw("Horizontal");
+
+		}
 
 		float targetVelocityX = velocity.x * moveSpeed;
 

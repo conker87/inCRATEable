@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[ExecuteInEditMode]
 public class SmoothCamera2D : MonoBehaviour {
 
 	public float dampTime = 0.15f, lockXAt = 0f, restrictYAbove = 0f;
