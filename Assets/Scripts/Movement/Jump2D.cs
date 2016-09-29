@@ -36,8 +36,6 @@ public class Jump2D : MonoBehaviour {
 
 				if (groundHit != null) {
 
-					Debug.Log ("groundHit: " + groundHit + ", velocityY: " + velocityY);
-
 					if (velocityY <= 0) {
 
 						if ((jp = groundHit.transform.parent.GetComponent<JumpPlatform2D> ()) != null) {
