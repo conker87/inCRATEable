@@ -10,7 +10,7 @@ public class Jump2D : MonoBehaviour {
 	JumpPlatform2D jp;
 
 	public float jumpHeight = 500f, originalJumpHeight;
-	public Transform groundCheck;
+	public Transform[] groundCheck;
 
 	public float groundRadius = .2f;
 	public LayerMask grounds;
@@ -28,25 +28,43 @@ public class Jump2D : MonoBehaviour {
 
 	void FixedUpdate () {
 	
-		grounded = groundHit = Physics2D.OverlapCircle(groundCheck.position, groundRadius, grounds);
+		if (groundCheck != null) {
 
-		if (groundHit != null && (jp = groundHit.transform.parent.GetComponent<JumpPlatform2D> ()) != null) {
+			foreach (Transform t in groundCheck) {
 
-			Debug.Log (groundHit);
+				grounded = groundHit = Physics2D.OverlapCircle (t.position, groundRadius, grounds);
 
-			jumpHeight = jp.jumpHeight;
+				if (groundHit != null) {
+
+					Debug.Log ("groundHit: " + groundHit + ", velocityY: " + velocityY);
+
+					if (velocityY <= 0) {
+
+						if ((jp = groundHit.transform.parent.GetComponent<JumpPlatform2D> ()) != null) {
+
+							jumpHeight = jp.jumpHeight;
+
+						}
+
+						if (grounded) {
+
+							Jump (jumpHeight);
+
+							jumpHeight = originalJumpHeight;
+
+							break;
+
+						}
+
+					}
+
+				}
+
+			}
 
 		}
 
 		velocityY = rigidbody2d.velocity.y;
-
-		if (grounded && velocityY <= 0) {
-
-			Jump (jumpHeight);
-
-			jumpHeight = originalJumpHeight;
-
-		}
 
 	}
 
@@ -61,7 +79,15 @@ public class Jump2D : MonoBehaviour {
 
 	void OnDrawGizmos() {
 
-		Gizmos.DrawSphere (groundCheck.position, groundRadius);
+		if (groundCheck != null) {
+
+			foreach (Transform t in groundCheck) {
+
+				Gizmos.DrawSphere (t.position, groundRadius);
+
+			}
+
+		}
 
 	}
 }
