@@ -7,11 +7,11 @@ public class DestroyPlatformsOnTriggerEnter : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 
-		//Debug.Log (other.name + ", tag: " + other.tag + ", pos: " + other.transform.position);
+		Debug.Log (other.transform.parent.name + ", tag: " + other.transform.parent.tag + ", pos: " + other.transform.parent.position);
 
-		if (other.tag == platformTag) {
+		if (other.transform.parent.tag == platformTag) {
 
-			Destroy (other.gameObject);
+			Destroy (other.transform.parent.gameObject);
 
 		}
 
