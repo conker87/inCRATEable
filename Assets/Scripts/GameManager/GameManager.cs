@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
 
 	public float score, topScore;
 
-	GameObject player;
+	GameObject target;
 
 	void Awake() {
 
@@ -17,33 +17,29 @@ public class GameManager : MonoBehaviour {
 		
 	void Start () {
 	
-		player = GameObject.FindGameObjectWithTag ("Player");
+		FindPlayer();
 
 	}
 
 	void Update () {
 	
-		if (player == null) {
+		if (FindPlayer()) {
 
-			player = GameObject.FindGameObjectWithTag ("Player");
+			SetScore ();
 
 		}
-
-		SetScore ();
-
+			
 	}
 
 	void SetScore() {
 
-		score = player.transform.position.y;
+		score = target.transform.position.y;
 
 		if (score > topScore) {
 
 			topScore = score;
 
 		}
-
-//		Debug.Log (GetScore());
 
 	}
 
@@ -68,4 +64,29 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad (gameObject);
 
 	}
+
+	bool FindPlayer() {
+
+		if (target == null) {
+
+			target = GameObject.FindGameObjectWithTag ("Player");
+
+			if (target == null) {
+
+				Debug.LogError ("Player cannot be found a second time, there is something seriously wrong!");
+
+				return false;
+
+			}
+
+			return true;
+
+		} else {
+
+			return true;
+
+		}
+
+	}
+
 }
