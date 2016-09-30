@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
 
-	public float score, topScore;
+	public float currentScore, maximumInstanceScore;
 
 	GameObject target;
 
@@ -33,11 +33,11 @@ public class GameManager : MonoBehaviour {
 
 	void SetScore() {
 
-		score = target.transform.position.y;
+		currentScore = target.transform.position.y;
 
-		if (score > topScore) {
+		if (currentScore > maximumInstanceScore) {
 
-			topScore = score;
+			maximumInstanceScore = currentScore;
 
 		}
 
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour {
 
 	public float GetScore() {
 
-		return topScore;
+		return maximumInstanceScore;
 
 	}
 

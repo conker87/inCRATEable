@@ -5,21 +5,18 @@ public class LeftRight2D : MonoBehaviour {
 
 	[Header("Movement & Speed")]
 	public float platformSpeed = 2f;
-	public StartingDirectionLeftRight d;
+	public StartingDirection startingDirection;
 
 	[Header("Position Restrictions")]
 	[Range(-15, 15)] public float minimum = -5f;
 	[Range(-15, 15)] public float maximum = 5f;
-
-
-
 
 	bool right;
 
 	// Use this for initialization
 	void Start () {
 	
-		right = (d == StartingDirectionLeftRight.LEFT) ? right = false : right = true;
+		right = (startingDirection == StartingDirection.LEFT) ? right = false : right = true;
 
 	}
 	
@@ -83,4 +80,4 @@ public class LeftRight2D : MonoBehaviour {
 
 }
 	
-public enum StartingDirectionLeftRight { LEFT, RIGHT };
+public enum StartingDirection { LEFT, RIGHT };
