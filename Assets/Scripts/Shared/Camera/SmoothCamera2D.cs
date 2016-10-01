@@ -48,9 +48,13 @@ public class SmoothCamera2D : MonoBehaviour {
 
 			if (target == null) {
 
-				Debug.LogError ("Player cannot be found a second time, there is something seriously wrong!");
+				if (target == null) {
 
-				return false;
+					Debug.LogError ("Player cannot be found a second time, there is something seriously wrong!");
+
+					return false;
+
+				}
 
 			}
 

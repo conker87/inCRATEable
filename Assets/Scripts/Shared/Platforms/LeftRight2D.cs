@@ -25,9 +25,16 @@ public class LeftRight2D : MonoBehaviour {
 
 		ValidateUserInput ();
 	
-		CheckPosition ();
+		if (GameManager.instance.paused || GameManager.instance.gameOver) {
 
-		MovePlatform ();
+
+
+		} else {
+
+			CheckPosition ();
+			DoMovement ();
+
+		}
 
 	}
 
@@ -47,7 +54,7 @@ public class LeftRight2D : MonoBehaviour {
 
 	}
 
-	void MovePlatform() {
+	void DoMovement() {
 
 		if (right) {
 

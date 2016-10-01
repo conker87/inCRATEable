@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
 
 	public float currentScore, maximumInstanceScore;
 
+	public bool gameOver = false, paused = false;
+
 	GameObject target;
 
 	void Awake() {
@@ -25,7 +27,11 @@ public class GameManager : MonoBehaviour {
 	
 		if (FindPlayer()) {
 
-			SetScore ();
+			if (!GameManager.instance.paused && !GameManager.instance.gameOver) {
+
+				SetScore ();
+
+			}
 
 		}
 			
@@ -73,9 +79,13 @@ public class GameManager : MonoBehaviour {
 
 			if (target == null) {
 
-				Debug.LogError ("Player cannot be found a second time, there is something seriously wrong!");
+				if (target == null) {
 
-				return false;
+					Debug.LogError ("Player cannot be found a second time, there is something seriously wrong! Unless you're on the Main Menu then this is normal.");
+
+					return false;
+
+				}
 
 			}
 

@@ -18,7 +18,21 @@ public class Movement2D : MonoBehaviour {
 	}
 
 	void Update () {
-	
+
+		if (GameManager.instance.paused || GameManager.instance.gameOver) {
+
+
+
+		} else {
+
+			DoMovement ();
+
+		}
+
+	}
+
+	void DoMovement() {
+
 		horitontalMovement = (Input.acceleration.x > -accelerationDeadzone && Input.acceleration.x < accelerationDeadzone) ? 0f : Input.acceleration.x * accelerationSpeedScale;
 
 		if (Input.GetAxis("Horizontal") != 0f) {

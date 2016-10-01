@@ -17,7 +17,11 @@ public class Jump2D : MonoBehaviour {
 
 	float velocityY;
 
+	Vector3 tempVelocity;
+
 	Rigidbody2D rigidbody2d;
+
+	bool justUnpaused = false, doOnce = false;
 
 	void Start () {
 
@@ -28,6 +32,31 @@ public class Jump2D : MonoBehaviour {
 
 	void FixedUpdate () {
 	
+		if (GameManager.instance.paused || GameManager.instance.gameOver) {
+
+			rigidbody2d.isKinematic = true;
+
+			justUnpaused = true;
+
+		} else {
+
+			rigidbody2d.isKinematic = false;
+
+			if (justUnpaused) {
+				
+				rigidbody2d.velocity = tempVelocity;
+				justUnpaused = false;
+
+			}
+
+			DoMovement ();
+
+		}
+
+	}
+
+	void DoMovement() {
+
 		if (groundCheck != null) {
 
 			foreach (Transform t in groundCheck) {
@@ -63,6 +92,7 @@ public class Jump2D : MonoBehaviour {
 		}
 
 		velocityY = rigidbody2d.velocity.y;
+		tempVelocity = rigidbody2d.velocity;
 
 	}
 
@@ -72,8 +102,6 @@ public class Jump2D : MonoBehaviour {
 		rigidbody2d.AddForce(new Vector2(0f, jumpHeight));
 
 	}
-
-
 
 	void OnDrawGizmos() {
 
