@@ -21,7 +21,7 @@ public class Jump2D : MonoBehaviour {
 
 	Rigidbody2D rigidbody2d;
 
-	bool justUnpaused = false, doOnce = false;
+	bool justUnpaused = false;
 
 	void Start () {
 

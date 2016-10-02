@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
 
 	public bool gameOver = false, paused = false;
 
+	float startScoringAtPosition = 20f, scoringMultiplier = 10f;
+
 	GameObject target;
 
 	void Awake() {
@@ -27,7 +29,11 @@ public class GameManager : MonoBehaviour {
 	
 		if (FindPlayer()) {
 
-			if (!GameManager.instance.paused && !GameManager.instance.gameOver) {
+			if (GameManager.instance.paused || GameManager.instance.gameOver) {
+
+
+
+			} else {
 
 				SetScore ();
 
@@ -39,11 +45,15 @@ public class GameManager : MonoBehaviour {
 
 	void SetScore() {
 
-		currentScore = target.transform.position.y;
+		if (target.transform.position.y > startScoringAtPosition) {
 
-		if (currentScore > maximumInstanceScore) {
+			currentScore = Mathf.Round((target.transform.position.y - startScoringAtPosition) * scoringMultiplier);
 
-			maximumInstanceScore = currentScore;
+			if (currentScore > maximumInstanceScore) {
+
+				maximumInstanceScore = currentScore;
+
+			}
 
 		}
 

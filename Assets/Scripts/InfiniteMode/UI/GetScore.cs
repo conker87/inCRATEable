@@ -6,7 +6,7 @@ public class GetScore : MonoBehaviour {
 
 	void Update () {
 	
-		GetComponent<Text> ().text = "Score: " + GameManager.instance.GetScore ();
+		GetComponent<Text> ().text = "Score " + GameManager.instance.GetScore ();
 
 	}
 
