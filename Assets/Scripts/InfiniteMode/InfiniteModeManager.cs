@@ -15,7 +15,8 @@ public class InfiniteModeManager : MonoBehaviour {
 	public GameObject PauseParent;
 	public GameObject TimerParent;
 
-	float timerStart = 3f;
+	[Header("Timer")]
+	public float timerStart = 3f;
 	public float currentTimer;
 	bool startGame = true;
 
@@ -58,6 +59,8 @@ public class InfiniteModeManager : MonoBehaviour {
 
 		}
 
+		ReloadSceneOnKeypress (KeyCode.P);
+
 	}
 
 	public void TogglePause() {
@@ -84,6 +87,14 @@ public class InfiniteModeManager : MonoBehaviour {
 
 			Debug.Log ("ShowGameOver :: UNFINISHED.");
 
+		}
+
+	}
+
+	void ReloadSceneOnKeypress (KeyCode key) {
+
+		if (Input.GetKeyUp (key)) {
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
 
 	}

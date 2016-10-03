@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DestroyPlatformBelowPosition : MonoBehaviour {
+public class DestroyPlatformBelowGameObject : MonoBehaviour {
 
 	[SerializeField]
 	GameObject despawner;

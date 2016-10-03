@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class MainMenu : MonoBehaviour {
 
-	public GameObject AboutParent, SettingsParent;
+	[Header("Canvases")]
+	public GameObject AboutParent;
+	public GameObject SettingsParent;
+
+	[Header("Buttons")]
+	public Button AboutButton;
+	public Button InfiniteModeButton, QuitButton, SettingsButton;
 
 	public void LoadScene(string SceneName = "MainMenu") {
 
@@ -16,7 +23,8 @@ public class MainMenu : MonoBehaviour {
 
 		if (toggle != null) {
 
-			toggle.SetActive(!toggle.activeInHierarchy);
+			toggle.SetActive(!toggle.activeSelf);
+			setButtons(!toggle.activeSelf);
 
 		}
 
@@ -27,6 +35,7 @@ public class MainMenu : MonoBehaviour {
 		if (SettingsParent != null) {
 
 			SettingsParent.SetActive(!SettingsParent.activeSelf);
+			setButtons(!SettingsParent.activeSelf);
 
 		}
 
@@ -37,8 +46,15 @@ public class MainMenu : MonoBehaviour {
 		if (AboutParent != null) {
 
 			AboutParent.SetActive(!AboutParent.activeSelf);
+			setButtons(!AboutParent.activeSelf);
 
 		}
+
+	}
+
+	void setButtons(bool value) {
+
+		AboutButton.interactable = InfiniteModeButton.interactable = QuitButton.interactable = SettingsButton.interactable = value;
 
 	}
 
