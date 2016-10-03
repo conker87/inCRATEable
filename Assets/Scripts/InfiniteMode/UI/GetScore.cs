@@ -5,8 +5,8 @@ using System.Collections;
 public class GetScore : MonoBehaviour {
 
 	void Update () {
-	
-		GetComponent<Text> ().text = "Score " + GameManager.instance.GetScore ();
+
+		GetComponent<Text> ().text = "Score " + string.Format("{0:n0}", GameManager.instance.GetScore ());
 
 	}
 
