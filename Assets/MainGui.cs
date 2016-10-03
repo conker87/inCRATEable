@@ -26,6 +26,7 @@ public class MainGui : MonoBehaviour {
     void Start () {
         // Select the Google Play Games platform as our social platform implementation
         GooglePlayGames.PlayGamesPlatform.Activate();
+		GooglePlayGames.PlayGamesPlatform.DebugLogEnabled = true;
     }
 
     void OnGUI() {
