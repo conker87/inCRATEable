@@ -7,13 +7,13 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour {
 
-	[Header("Canvases")]
-	public GameObject AboutParent;
-	public GameObject SettingsParent;
+	[Header("Game Buttons")]
+	public Button InfiniteModeButton;
+	public Button LeaderboardButton, SettingsButton, QuitButton;
 
-	[Header("Buttons")]
-	public Button AboutButton;
-	public Button InfiniteModeButton, LoginButton, QuitButton, SettingsButton;
+	[Header("Login Buttons")]
+	public Button LoginButton;
+	public Button LogoutButton;
 
 	public void LoadScene(string SceneName = "MainMenu") {
 
@@ -51,20 +51,16 @@ public class MainMenu : MonoBehaviour {
 			((PlayGamesPlatform)Social.Active).SignOut ();
 
 		} else {
-			
-			LoginButton.GetComponentInChildren<Text> ().text = "Login";
 
 			Social.localUser.Authenticate ((bool success) => {
 				
 				if (success) {
 
 					Debug.Log ("You've successfully logged in");
-					LoginButton.GetComponentInChildren<Text>().text = "Logout";
 
 				} else {
 					
 					Debug.Log ("Login failed for some reason");
-					LoginButton.GetComponentInChildren<Text>().text = "Failed";
 
 				}
 
@@ -74,42 +70,26 @@ public class MainMenu : MonoBehaviour {
 		
 	}
 
-	public void ToggleGameObject(GameObject toggle) {
+	public void ShowLeaderboard(string leaderboard) {
 
-		if (toggle != null) {
-
-			toggle.SetActive(!toggle.activeSelf);
-			setButtons(!toggle.activeSelf);
-
-		}
+		((PlayGamesPlatform)Social.Active).ShowLeaderboardUI (GameManager.instance.Leaderboard_InfiniteMode);
 
 	}
 
-	public void ToggleSettings() {
+	public void ToggleDetails(GameObject toggle) {
 
-		if (SettingsParent != null) {
+			if (toggle != null) {
 
-			SettingsParent.SetActive(!SettingsParent.activeSelf);
-			setButtons(!SettingsParent.activeSelf);
+				toggle.SetActive (!toggle.activeSelf);
+				setButtons (!toggle.activeSelf);
 
-		}
-
-	}
-
-	public void ToggleAbout() {
-
-		if (AboutParent != null) {
-
-			AboutParent.SetActive(!AboutParent.activeSelf);
-			setButtons(!AboutParent.activeSelf);
-
-		}
+			}
 
 	}
 
 	void setButtons(bool value) {
 
-		AboutButton.interactable = InfiniteModeButton.interactable = QuitButton.interactable = SettingsButton.interactable = value;
+		//AboutButton.interactable = InfiniteModeButton.interactable = QuitButton.interactable = SettingsButton.interactable = value;
 
 	}
 
