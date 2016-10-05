@@ -9,11 +9,13 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
 
-	public float currentScore, maximumInstanceScore;
+	public float currentScore, maxScore;
 
 	public string currentState = "MainMenu";
 
-	public bool gameOver = false, paused = false;
+	public bool gameOver = false, paused = false, authenticating = false;
+
+	public bool infiniteMode_Brutal = false, infiniteMode_Rainbow = false;
 
 	float startScoringAtPosition = 20f, scoringMultiplier = 10f;
 
@@ -64,9 +66,9 @@ public class GameManager : MonoBehaviour {
 
 			currentScore = Mathf.Round((target.transform.position.y - startScoringAtPosition) * scoringMultiplier);
 
-			if (currentScore > maximumInstanceScore) {
+			if (currentScore > maxScore) {
 
-				maximumInstanceScore = currentScore;
+				maxScore = currentScore;
 
 			}
 
@@ -76,7 +78,7 @@ public class GameManager : MonoBehaviour {
 
 	public float GetScore() {
 
-		return maximumInstanceScore;
+		return maxScore;
 
 	}
 

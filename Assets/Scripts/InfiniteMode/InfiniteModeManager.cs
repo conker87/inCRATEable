@@ -28,16 +28,20 @@ public class InfiniteModeManager : MonoBehaviour {
 
 	void Start() {
 
+		// Reset pausing mechanic.
 		GameManager.instance.gameOver = false;
 		GameOverParent.SetActive (false);
 
 		GameManager.instance.paused = true;
 		PauseParent.SetActive (false);
 
-		GameManager.instance.maximumInstanceScore = 0f;
+		// Reset score.
+		GameManager.instance.maxScore = 0f;
 
+		// Spawn player
 		Instantiate (target, targetStartingPosition, Quaternion.identity);
 
+		// Start timer.
 		currentTimer = timerStart;
 		TimerParent.SetActive (true);
 	}

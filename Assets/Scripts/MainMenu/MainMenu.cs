@@ -13,25 +13,27 @@ public class MainMenu : MonoBehaviour {
 
 	[Header("Login Buttons")]
 	public Button LoginButton;
-	public Button LogoutButton;
 
-	public void LoadScene(string SceneName = "MainMenu") {
+	[Header("Infinite Mode Toggles")]
+	public Toggle InfiniteMode_Brutal;
+	public Toggle InfiniteMode_Rainbow;
 
-		SceneManager.LoadScene (SceneName);
-
-	}
+	[Header("Details Parent")]
+	public GameObject[] allDetails;
 
 	void Start() {
 
 		GameManager.instance.gameOver = GameManager.instance.paused = false;
-		GameManager.instance.currentState = "MainMenu";
 
+		ResetUIElements ();
 		Login ();
 
 	}
 
 	void Update() {
-		
+
+		Debug.Log (allDetails.ToString());
+
 		if (Social.localUser.authenticated) {
 
 			Debug.Log ("Logged in.");
@@ -44,6 +46,12 @@ public class MainMenu : MonoBehaviour {
 
 	}
 
+	public void LoadScene(string SceneName = "MainMenu") {
+
+		SceneManager.LoadScene (SceneName);
+
+	}
+
 	public void Login() {
 
 		if (Social.localUser.authenticated) {
@@ -53,13 +61,17 @@ public class MainMenu : MonoBehaviour {
 		} else {
 
 			Social.localUser.Authenticate ((bool success) => {
-				
+
+				GameManager.instance.authenticating = true;
+
 				if (success) {
 
+					GameManager.instance.authenticating = false;
 					Debug.Log ("You've successfully logged in");
 
 				} else {
-					
+
+					GameManager.instance.authenticating = false;
 					Debug.Log ("Login failed for some reason");
 
 				}
@@ -70,26 +82,44 @@ public class MainMenu : MonoBehaviour {
 		
 	}
 
+	void ResetUIElements() {
+
+		InfiniteMode_Brutal.isOn = GameManager.instance.infiniteMode_Brutal;
+		InfiniteMode_Rainbow.isOn = GameManager.instance.infiniteMode_Rainbow;
+
+	}
+
 	public void ShowLeaderboard(string leaderboard) {
 
 		((PlayGamesPlatform)Social.Active).ShowLeaderboardUI (GameManager.instance.Leaderboard_InfiniteMode);
 
 	}
 
-	public void ToggleDetails(GameObject toggle) {
+	public void ToggleBrutalMode(Toggle toggle) {
 
-			if (toggle != null) {
-
-				toggle.SetActive (!toggle.activeSelf);
-				setButtons (!toggle.activeSelf);
-
-			}
+		GameManager.instance.infiniteMode_Brutal = toggle.isOn;
 
 	}
 
-	void setButtons(bool value) {
+	public void ToggleRainbowMode(Toggle toggle) {
 
-		//AboutButton.interactable = InfiniteModeButton.interactable = QuitButton.interactable = SettingsButton.interactable = value;
+		GameManager.instance.infiniteMode_Rainbow = toggle.isOn;
+
+	}
+
+	public void ToggleDetails(GameObject toggle) {
+
+		foreach (GameObject t in allDetails) {
+
+			if (t == toggle) {
+				
+				t.SetActive (!t.activeSelf);
+
+			} else {
+				t.SetActive (false);
+			}
+
+		}
 
 	}
 
