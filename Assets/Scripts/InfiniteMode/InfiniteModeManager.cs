@@ -44,22 +44,36 @@ public class InfiniteModeManager : MonoBehaviour {
 
 	void Update() {
 
-		if (startGame) {
+		if (!GameManager.instance.gameOver) {
 
-			//Debug.Log (currentTimer);
-			currentTimer -= Time.deltaTime;
+			if (startGame) {
 
-			if (currentTimer < 0f) {
+				//Debug.Log (currentTimer);
+				currentTimer -= Time.deltaTime;
 
-				startGame = false;
-				TimerParent.SetActive (false);
-				GameManager.instance.paused = false;
+				if (currentTimer < 0f) {
+
+					startGame = false;
+					TimerParent.SetActive (false);
+					GameManager.instance.paused = false;
+
+				}
 
 			}
+
+		} else {
+
+			GameOverParent.SetActive (true);
 
 		}
 
 		ReloadSceneOnKeypress (KeyCode.P);
+
+	}
+
+	public void Restart() {
+
+		SceneManager.LoadScene ("InfiniteMode");
 
 	}
 

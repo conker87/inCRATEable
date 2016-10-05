@@ -21,6 +21,15 @@ public class MainMenu : MonoBehaviour {
 
 	}
 
+	void Start() {
+
+		GameManager.instance.gameOver = GameManager.instance.paused = false;
+		GameManager.instance.currentState = "MainMenu";
+
+		Login ();
+
+	}
+
 	void Update() {
 		
 		if (Social.localUser.authenticated) {
@@ -42,6 +51,7 @@ public class MainMenu : MonoBehaviour {
 			((PlayGamesPlatform)Social.Active).SignOut ();
 
 		} else {
+			
 			LoginButton.GetComponentInChildren<Text> ().text = "Login";
 
 			Social.localUser.Authenticate ((bool success) => {

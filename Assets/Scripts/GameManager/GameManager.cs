@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using GooglePlayGames;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -7,9 +11,14 @@ public class GameManager : MonoBehaviour {
 
 	public float currentScore, maximumInstanceScore;
 
+	public string currentState = "MainMenu";
+
 	public bool gameOver = false, paused = false;
 
 	float startScoringAtPosition = 20f, scoringMultiplier = 10f;
+
+	public readonly string Leaderboard_InfiniteMode = "CgkI7eiV49sPEAIQBg";
+	public readonly string Achievement_1 = "";
 
 	GameObject target;
 
@@ -23,11 +32,13 @@ public class GameManager : MonoBehaviour {
 	
 		FindPlayer();
 
+		PlayGamesPlatform.Activate();
+
 	}
 
 	void Update () {
 	
-		if (FindPlayer()) {
+		if (FindPlayer ()) {
 
 			if (GameManager.instance.paused || GameManager.instance.gameOver) {
 
@@ -38,6 +49,10 @@ public class GameManager : MonoBehaviour {
 				SetScore ();
 
 			}
+
+		} else {
+
+			GameManager.instance.gameOver = true;
 
 		}
 			
