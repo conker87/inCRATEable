@@ -8,6 +8,8 @@ public class Wrap2D : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
+		//wrapPosition = (Screen.height / 2f) + 1f;
+
 	}
 	
 	// Update is called once per frame

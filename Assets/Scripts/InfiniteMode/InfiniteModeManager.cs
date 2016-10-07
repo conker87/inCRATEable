@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
@@ -61,13 +62,33 @@ public class InfiniteModeManager : MonoBehaviour {
 					TimerParent.SetActive (false);
 					GameManager.instance.paused = false;
 
+					currentTimer = 1f;
+
 				}
 
 			}
 
 		} else {
 
-			GameOverParent.SetActive (true);
+			currentTimer -= Time.deltaTime;
+
+			if (currentTimer > 0f) { 
+
+				TimerParent.SetActive (true);
+
+			}
+
+			if (currentTimer < 0f) {
+
+				TimerParent.SetActive (false);
+
+				if (Advertisement.IsReady () && !GameOverParent.activeSelf) {
+
+					Advertisement.Show ();
+
+				}
+
+			}
 
 		}
 
@@ -96,16 +117,6 @@ public class InfiniteModeManager : MonoBehaviour {
 
 		// Save score?
 		SceneManager.LoadScene ("MainMenu");
-
-	}
-
-	public void ShowGameOver() {
-
-		if (GameOverParent != null && GameManager.instance.gameOver) {
-
-			Debug.Log ("ShowGameOver :: UNFINISHED.");
-
-		}
 
 	}
 

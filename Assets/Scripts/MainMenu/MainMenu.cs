@@ -26,13 +26,11 @@ public class MainMenu : MonoBehaviour {
 		GameManager.instance.gameOver = GameManager.instance.paused = false;
 
 		ResetUIElements ();
-		Login ();
+		Login (true);
 
 	}
 
 	void Update() {
-
-		Debug.Log (allDetails.ToString());
 
 		if (Social.localUser.authenticated) {
 
@@ -52,13 +50,13 @@ public class MainMenu : MonoBehaviour {
 
 	}
 
-	public void Login() {
+	public void Login(bool justLogin = false) {
 
-		if (Social.localUser.authenticated) {
+		if (!justLogin && Social.localUser.authenticated) {
 
 			((PlayGamesPlatform)Social.Active).SignOut ();
 
-		} else {
+		} else if (justLogin || !Social.localUser.authenticated) {
 
 			Social.localUser.Authenticate ((bool success) => {
 
