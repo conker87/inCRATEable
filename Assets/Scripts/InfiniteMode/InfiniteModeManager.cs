@@ -53,10 +53,11 @@ public class InfiniteModeManager : MonoBehaviour {
 
 			if (startGame) {
 
-				//Debug.Log (currentTimer);
-				currentTimer -= Time.deltaTime;
+				if (currentTimer > 0f) { 
+					currentTimer -= Time.deltaTime;
+				}
 
-				if (currentTimer < 0f) {
+				if (currentTimer <= 0f) {
 
 					startGame = false;
 					TimerParent.SetActive (false);
@@ -78,15 +79,17 @@ public class InfiniteModeManager : MonoBehaviour {
 
 			}
 
-			if (currentTimer < 0f) {
+			if (currentTimer <= 0f) {
 
 				TimerParent.SetActive (false);
 
-				if (Advertisement.IsReady () && !GameOverParent.activeSelf) {
+				if (Advertisement.IsReady ()) {
 
 					Advertisement.Show ();
 
 				}
+
+				GameOverParent.SetActive (true);
 
 			}
 

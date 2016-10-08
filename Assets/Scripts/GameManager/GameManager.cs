@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 
 	float startScoringAtPosition = 20f, scoringMultiplier = 10f;
 
-	public readonly string Leaderboard_InfiniteMode = "CgkI7eiV49sPEAIQBg";
+	public readonly string Leaderboard_InfiniteMode = "CgkI7eiV49sPEAIQBg", Leaderboard_InfiniteModeBrutal = "CgkI7eiV49sPEAIQBw";
 	public readonly string Achievement_1 = "";
 
 	GameObject target;

@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour {
 		GameManager.instance.gameOver = GameManager.instance.paused = false;
 
 		ResetUIElements ();
-		Login (true);
+		//Login (true);
 
 	}
 
