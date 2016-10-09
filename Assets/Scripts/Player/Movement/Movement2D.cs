@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement2D : MonoBehaviour {
 
-	public float moveSpeed = 4f, accelerationDeadzone = 0f, accelerationSpeedScale = 1.5f;
+	public float moveSpeed = 4f, accelerationSpeedScale = 1.5f;
 
 	float horitontalMovement;
 
@@ -33,7 +33,7 @@ public class Movement2D : MonoBehaviour {
 
 	void DoMovement() {
 
-		horitontalMovement = (Input.acceleration.x > -accelerationDeadzone && Input.acceleration.x < accelerationDeadzone) ? 0f : Input.acceleration.x * accelerationSpeedScale;
+		horitontalMovement = (Input.acceleration.x > -GameManager.instance.accelerationDeadzone && Input.acceleration.x < GameManager.instance.accelerationDeadzone) ? 0f : Input.acceleration.x * accelerationSpeedScale;
 
 		if (Input.GetAxis("Horizontal") != 0f) {
 
@@ -41,7 +41,7 @@ public class Movement2D : MonoBehaviour {
 
 		}
 
-		rigidbody2d.velocity = new Vector2(horitontalMovement * moveSpeed, rigidbody2d.velocity.y);
+		rigidbody2d.velocity = new Vector2(horitontalMovement * moveSpeed * GameManager.instance.acceleratorSensitivity, rigidbody2d.velocity.y);
 
 	}
 }

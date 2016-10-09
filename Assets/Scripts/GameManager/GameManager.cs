@@ -16,15 +16,19 @@ public class GameManager : MonoBehaviour {
 	public bool gameOver = false, paused = false, authenticating = false;
 
 	public bool infiniteMode_Brutal = false, infiniteMode_Rainbow = false;
+	public int difficulty = 1;
 
+	public float acceleratorSensitivity = 1f, accelerationDeadzone = 0f;
 
-
-	public readonly string Leaderboard_InfiniteMode = "CgkI7eiV49sPEAIQBg", Leaderboard_InfiniteModeBrutal = "CgkI7eiV49sPEAIQBw";
+	public readonly string Leaderboard_InfiniteModeNormal = "CgkI7eiV49sPEAIQBg", Leaderboard_InfiniteModeHard = "CgkI7eiV49sPEAIQCA", Leaderboard_InfiniteModeBrutal = "CgkI7eiV49sPEAIQCQ",
+								Leaderboard_InfiniteModeBrutalMode = "CgkI7eiV49sPEAIQBw";
 	public readonly string Achievement_1 = "";
 
 	GameObject target;
 
 	void Awake() {
+
+		GooglePlayGames.PlayGamesPlatform.Activate();
 
 		Singleton ();
 

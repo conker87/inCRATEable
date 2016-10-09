@@ -91,15 +91,35 @@ public class InfiniteModeManager : MonoBehaviour {
 
 				if (!GameOverParent.activeSelf) {
 
-					if (Social.localUser.authenticated) {
+					if (Social.localUser.authenticated && GameManager.instance.difficulty > 1) {
 
 						string id;
 
 						ScoringLocation.text = "Score: " + GameManager.instance.GetScore ().ToString ();
 
-						id = (GameManager.instance.infiniteMode_Brutal) ? GameManager.instance.Leaderboard_InfiniteModeBrutal : GameManager.instance.Leaderboard_InfiniteMode;
+						if (GameManager.instance.infiniteMode_Brutal) {
+							
+							id = GameManager.instance.Leaderboard_InfiniteModeBrutalMode;
 
-						Social.ReportScore (long.Parse (GameManager.instance.GetScore ().ToString ()), id,
+						} else {
+
+							id = GameManager.instance.Leaderboard_InfiniteModeNormal;
+
+							if (GameManager.instance.difficulty == 3) {
+								
+								id = GameManager.instance.Leaderboard_InfiniteModeHard;
+
+							}
+
+							if (GameManager.instance.difficulty == 4) {
+								
+								id = GameManager.instance.Leaderboard_InfiniteModeBrutal;
+
+							}
+							
+						}
+
+						Social.ReportScore (long.Parse (GameManager.instance.GetScore().ToString()), id,
 
 							(bool success) => {
 

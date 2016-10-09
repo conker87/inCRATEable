@@ -17,6 +17,11 @@ public class MainMenu : MonoBehaviour {
 	[Header("Infinite Mode Toggles")]
 	public Toggle InfiniteMode_Brutal;
 	public Toggle InfiniteMode_Rainbow;
+	public Dropdown Difficulty;
+
+	[Header("Settings Sliders")]
+	public Slider AcceleratorSensitivity;
+	public Slider AcceleratorDeadzone;
 
 	[Header("Details Parent")]
 	public GameObject[] allDetails;
@@ -26,7 +31,6 @@ public class MainMenu : MonoBehaviour {
 		GameManager.instance.gameOver = GameManager.instance.paused = false;
 
 		ResetUIElements ();
-		//Login (true);
 
 	}
 
@@ -34,11 +38,11 @@ public class MainMenu : MonoBehaviour {
 
 		if (Social.localUser.authenticated) {
 
-			Debug.Log ("Logged in.");
+
 
 		} else {
 
-			Debug.Log ("Logged out.");
+
 
 		}
 
@@ -84,24 +88,60 @@ public class MainMenu : MonoBehaviour {
 
 		InfiniteMode_Brutal.isOn = GameManager.instance.infiniteMode_Brutal;
 		InfiniteMode_Rainbow.isOn = GameManager.instance.infiniteMode_Rainbow;
+		Difficulty.value = GameManager.instance.difficulty;
 
 	}
 
-	public void ShowLeaderboard(string leaderboard) {
+	public void ShowLeaderboard(string leaderboard = "") {
 
-		((PlayGamesPlatform)Social.Active).ShowLeaderboardUI (GameManager.instance.Leaderboard_InfiniteMode);
+		string lb;
+
+		if (leaderboard == "") {
+		
+			return;
+
+		} else {
+
+			lb = leaderboard;
+
+		}
+
+		((PlayGamesPlatform) Social.Active).ShowLeaderboardUI (lb);
 
 	}
 
-	public void ToggleBrutalMode(Toggle toggle) {
+	public void ShowAchievementsUI() {
+
+		Social.ShowAchievementsUI();
+
+	}
+
+	public void InfiniteMode_ToggleBrutalMode(Toggle toggle) {
 
 		GameManager.instance.infiniteMode_Brutal = toggle.isOn;
 
+		if (GameManager.instance.infiniteMode_Brutal) {
+
+			Difficulty.value = 4;
+			Difficulty.interactable = false;
+
+		} else {
+
+			Difficulty.interactable = true;
+
+		}
+
 	}
 
-	public void ToggleRainbowMode(Toggle toggle) {
+	public void InfiniteMode_ToggleRainbowMode(Toggle toggle) {
 
 		GameManager.instance.infiniteMode_Rainbow = toggle.isOn;
+
+	}
+
+	public void InfiniteMode_DifficultyChanged() {
+
+		GameManager.instance.difficulty = Difficulty.value;
 
 	}
 
@@ -118,6 +158,26 @@ public class MainMenu : MonoBehaviour {
 			}
 
 		}
+
+	}
+
+	public void Settings_ChangeAcceleratorDeadzone() {
+
+		GameManager.instance.accelerationDeadzone = AcceleratorDeadzone.value;
+
+	}
+
+	public void Settings_ChangeAcceleratorSensitivity() {
+
+		GameManager.instance.acceleratorSensitivity = AcceleratorSensitivity.value;
+
+	}
+
+	public void Settings_ResetSettingsToDefault() {
+
+		AcceleratorDeadzone.value = 0.0f;
+		AcceleratorSensitivity.value = 1.0f;
+
 
 	}
 
