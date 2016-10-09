@@ -3,7 +3,8 @@ using System.Collections;
 
 public class SmoothCamera2D : MonoBehaviour {
 
-	public float dampTime = 0.15f, lockXAt = 0f, restrictYAbove = 0f, currentMaxYLevel;
+	public float dampTime = 0.15f, lockXAt = 0f, restrictYAbove = 0f;
+	float currentMaxYLevel;
 	private Vector3 velocity = Vector3.zero, position;
 	public GameObject target;
 

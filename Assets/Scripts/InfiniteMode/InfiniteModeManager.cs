@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections;
 
 public class InfiniteModeManager : MonoBehaviour {
@@ -8,18 +9,22 @@ public class InfiniteModeManager : MonoBehaviour {
 	public static InfiniteModeManager instance = null;
 
 	[Header("Player")]
-	public GameObject target;
+	public GameObject playerPrefab;
 	public Vector3 targetStartingPosition;
+	GameObject target;
 
 	[Header("Canvases")]
 	public GameObject GameOverParent;
-	public GameObject PauseParent;
-	public GameObject TimerParent;
+	public GameObject PauseParent, TimerParent;
 
 	[Header("Timer")]
 	public float timerStart = 3f;
 	public float currentTimer;
 	bool startGame = true;
+
+	float startScoringAtPosition = 20f, scoringMultiplier = 10f, currentScore;
+
+	public Text ScoringLocation;
 
 	void Awake() {
 
@@ -40,7 +45,7 @@ public class InfiniteModeManager : MonoBehaviour {
 		GameManager.instance.maxScore = 0f;
 
 		// Spawn player
-		Instantiate (target, targetStartingPosition, Quaternion.identity);
+		target = Instantiate (playerPrefab, targetStartingPosition, Quaternion.identity) as GameObject;
 
 		// Start timer.
 		currentTimer = timerStart;
@@ -69,13 +74,14 @@ public class InfiniteModeManager : MonoBehaviour {
 
 			}
 
-		} else {
+			SetScore ();
 
-			currentTimer -= Time.deltaTime;
+		} else {
 
 			if (currentTimer > 0f) { 
 
 				TimerParent.SetActive (true);
+				currentTimer -= Time.deltaTime;
 
 			}
 
@@ -83,9 +89,43 @@ public class InfiniteModeManager : MonoBehaviour {
 
 				TimerParent.SetActive (false);
 
-				if (Advertisement.IsReady ()) {
+				if (!GameOverParent.activeSelf) {
 
-					Advertisement.Show ();
+					if (Social.localUser.authenticated) {
+
+						string id;
+
+						ScoringLocation.text = "Score: " + GameManager.instance.GetScore ().ToString ();
+
+						id = (GameManager.instance.infiniteMode_Brutal) ? GameManager.instance.Leaderboard_InfiniteModeBrutal : GameManager.instance.Leaderboard_InfiniteMode;
+
+						Social.ReportScore (long.Parse (GameManager.instance.GetScore ().ToString ()), id,
+
+							(bool success) => {
+
+								if (success) {
+
+									ScoringLocation.text = "Score sent!";
+
+								} else {
+
+									ScoringLocation.text = "Score sending failed :(";
+
+								}
+
+							});
+
+					} else {
+
+						ScoringLocation.text = "Local Score: " + GameManager.instance.GetScore ().ToString ();
+
+					}
+
+					if (Random.value < 0.5f && Advertisement.IsReady ()) {
+
+						Advertisement.Show ();
+
+					}
 
 				}
 
@@ -96,6 +136,22 @@ public class InfiniteModeManager : MonoBehaviour {
 		}
 
 		ReloadSceneOnKeypress (KeyCode.P);
+
+	}
+
+	void SetScore() {
+
+		if (target.transform.position.y > startScoringAtPosition) {
+
+			currentScore = Mathf.Round((target.transform.position.y - startScoringAtPosition) * scoringMultiplier);
+
+			if (currentScore > GameManager.instance.GetScore()) {
+
+				GameManager.instance.SetScore(currentScore);
+
+			}
+
+		}
 
 	}
 

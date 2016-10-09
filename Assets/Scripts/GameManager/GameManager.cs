@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour {
 
 	public bool infiniteMode_Brutal = false, infiniteMode_Rainbow = false;
 
-	float startScoringAtPosition = 20f, scoringMultiplier = 10f;
+
 
 	public readonly string Leaderboard_InfiniteMode = "CgkI7eiV49sPEAIQBg", Leaderboard_InfiniteModeBrutal = "CgkI7eiV49sPEAIQBw";
 	public readonly string Achievement_1 = "";
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour {
 
 			} else {
 
-				SetScore ();
+
 
 			}
 
@@ -60,19 +60,9 @@ public class GameManager : MonoBehaviour {
 			
 	}
 
-	void SetScore() {
+	public void SetScore(float score) {
 
-		if (target.transform.position.y > startScoringAtPosition) {
-
-			currentScore = Mathf.Round((target.transform.position.y - startScoringAtPosition) * scoringMultiplier);
-
-			if (currentScore > maxScore) {
-
-				maxScore = currentScore;
-
-			}
-
-		}
+		maxScore = score;
 
 	}
 
@@ -98,7 +88,7 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	bool FindPlayer() {
+	public bool FindPlayer() {
 
 		if (target == null) {
 

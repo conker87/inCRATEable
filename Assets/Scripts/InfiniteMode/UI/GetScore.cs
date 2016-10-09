@@ -4,9 +4,18 @@ using System.Collections;
 
 public class GetScore : MonoBehaviour {
 
+	Text text;
+
+	void Start () {
+
+		text = GetComponent<Text> ();
+
+	}
+
+
 	void Update () {
 
-		GetComponent<Text> ().text = "Score " + string.Format("{0:n0}", GameManager.instance.GetScore ());
+		text.text = "Score " + string.Format("{0:n0}", GameManager.instance.GetScore ());
 
 	}
 
