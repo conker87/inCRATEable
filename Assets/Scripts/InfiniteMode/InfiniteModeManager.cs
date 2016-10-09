@@ -8,14 +8,16 @@ public class InfiniteModeManager : MonoBehaviour {
 
 	public static InfiniteModeManager instance = null;
 
+	[Header("Manager Settings")]
 	[Header("Player")]
 	public GameObject playerPrefab;
 	public Vector3 targetStartingPosition;
 	GameObject target;
 
-	[Header("Canvases")]
+	[Header("Canvases / UI")]
 	public GameObject GameOverParent;
 	public GameObject PauseParent, TimerParent;
+	public Text ScoringLocation;
 
 	[Header("Timer")]
 	public float timerStart = 3f;
@@ -24,7 +26,7 @@ public class InfiniteModeManager : MonoBehaviour {
 
 	float startScoringAtPosition = 20f, scoringMultiplier = 10f, currentScore;
 
-	public Text ScoringLocation;
+
 
 	void Awake() {
 
@@ -72,8 +74,13 @@ public class InfiniteModeManager : MonoBehaviour {
 
 				}
 
+				if (GameManager.instance.difficulty > 1) {
+					CheckForAchievements ();
+				}
+
 			}
 
+			scoringMultiplier = GameManager.instance.ScoreMultiplier;
 			SetScore ();
 
 		} else {
@@ -156,6 +163,128 @@ public class InfiniteModeManager : MonoBehaviour {
 		}
 
 		ReloadSceneOnKeypress (KeyCode.P);
+
+	}
+
+	void CheckForAchievements () {
+
+		if (GameManager.instance.GetScore () > 10000f) {
+
+			Social.ReportProgress (GameManager.instance.Achievement_InfiniteMode_10000, 100.0f, (bool success) =>
+				{
+					if (success)
+					{
+						Debug.Log("Achievement giving success");
+					}
+					else
+					{
+						Debug.Log("Achievement giving failed");
+					}
+				});
+
+		}
+
+		if (GameManager.instance.GetScore () > 20000f) {
+
+			Social.ReportProgress (GameManager.instance.Achievement_InfiniteMode_20000, 100.0f, (bool success) =>
+				{
+					if (success)
+					{
+						Debug.Log("Achievement giving success");
+					}
+					else
+					{
+						Debug.Log("Achievement giving failed");
+					}
+				});
+
+		}
+
+		if (GameManager.instance.GetScore () > 30000f) {
+
+			Social.ReportProgress (GameManager.instance.Achievement_InfiniteMode_30000, 100.0f, (bool success) =>
+				{
+					if (success)
+					{
+						Debug.Log("Achievement giving success");
+					}
+					else
+					{
+						Debug.Log("Achievement giving failed");
+					}
+				});
+
+		}
+
+		if (GameManager.instance.GetScore () > 50000f) {
+
+			Social.ReportProgress (GameManager.instance.Achievement_InfiniteMode_50000, 100.0f, (bool success) =>
+				{
+					if (success)
+					{
+						Debug.Log("Achievement giving success");
+					}
+					else
+					{
+						Debug.Log("Achievement giving failed");
+					}
+				});
+
+		}
+
+		if (GameManager.instance.GetScore () > 100000f) {
+
+			Social.ReportProgress (GameManager.instance.Achievement_InfiniteMode_100000, 100.0f, (bool success) =>
+				{
+					if (success)
+					{
+						Debug.Log("Achievement giving success");
+					}
+					else
+					{
+						Debug.Log("Achievement giving failed");
+					}
+				});
+
+		}
+
+		if (GameManager.instance.GetScore () > 500000f) {
+
+			Social.ReportProgress (GameManager.instance.Achievement_InfiniteMode_500000, 100.0f, (bool success) =>
+				{
+					if (success)
+					{
+						Debug.Log("Achievement giving success");
+					}
+					else
+					{
+						Debug.Log("Achievement giving failed");
+					}
+				});
+
+		}
+
+		if (GameManager.instance.GetScore () > 1000000f) {
+
+			Social.ReportProgress (GameManager.instance.Achievement_InfiniteMode_1000000, 100.0f, (bool success) =>
+				{
+					if (success)
+					{
+						Debug.Log("Achievement giving success");
+					}
+					else
+					{
+						Debug.Log("Achievement giving failed");
+					}
+				});
+
+		}
+
+	}
+
+	public void TESTING_ADD_SCORE(float score) {
+
+		GameManager.instance.SetScore (score + GameManager.instance.GetScore ());
 
 	}
 

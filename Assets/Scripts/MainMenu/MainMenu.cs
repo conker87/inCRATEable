@@ -56,15 +56,15 @@ public class MainMenu : MonoBehaviour {
 
 	public void Login(bool justLogin = false) {
 
-		if (!justLogin && Social.localUser.authenticated) {
+		if (Social.localUser.authenticated) {
 
-			((PlayGamesPlatform)Social.Active).SignOut ();
+
 
 		} else if (justLogin || !Social.localUser.authenticated) {
+			
+			GameManager.instance.authenticating = true;
 
 			Social.localUser.Authenticate ((bool success) => {
-
-				GameManager.instance.authenticating = true;
 
 				if (success) {
 
@@ -84,6 +84,16 @@ public class MainMenu : MonoBehaviour {
 		
 	}
 
+	public void Logout(bool forced = false) {
+
+		if (forced || Social.localUser.authenticated) {
+
+			((PlayGamesPlatform) Social.Active).SignOut();
+
+		}
+
+	}
+
 	void ResetUIElements() {
 
 		InfiniteMode_Brutal.isOn = GameManager.instance.infiniteMode_Brutal;
@@ -98,6 +108,7 @@ public class MainMenu : MonoBehaviour {
 
 		if (leaderboard == "") {
 		
+			Social.ShowLeaderboardUI();
 			return;
 
 		} else {
@@ -177,7 +188,6 @@ public class MainMenu : MonoBehaviour {
 
 		AcceleratorDeadzone.value = 0.0f;
 		AcceleratorSensitivity.value = 1.0f;
-
 
 	}
 

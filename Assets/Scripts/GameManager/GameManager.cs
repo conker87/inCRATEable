@@ -17,12 +17,15 @@ public class GameManager : MonoBehaviour {
 
 	public bool infiniteMode_Brutal = false, infiniteMode_Rainbow = false;
 	public int difficulty = 1;
+	public float ScoreMultiplier = 10f;
 
 	public float acceleratorSensitivity = 1f, accelerationDeadzone = 0f;
 
 	public readonly string Leaderboard_InfiniteModeNormal = "CgkI7eiV49sPEAIQBg", Leaderboard_InfiniteModeHard = "CgkI7eiV49sPEAIQCA", Leaderboard_InfiniteModeBrutal = "CgkI7eiV49sPEAIQCQ",
 								Leaderboard_InfiniteModeBrutalMode = "CgkI7eiV49sPEAIQBw";
-	public readonly string Achievement_1 = "";
+	public readonly string Achievement_InfiniteMode_10000 = "CgkI7eiV49sPEAIQAQ", Achievement_InfiniteMode_20000 = "CgkI7eiV49sPEAIQAg", Achievement_InfiniteMode_30000 = "CgkI7eiV49sPEAIQAw", 
+							Achievement_InfiniteMode_50000 = "CgkI7eiV49sPEAIQBA", Achievement_InfiniteMode_100000 = "CgkI7eiV49sPEAIQBQ", Achievement_InfiniteMode_500000 = "CgkI7eiV49sPEAIQCg", 
+							Achievement_InfiniteMode_1000000 = "CgkI7eiV49sPEAIQCw";
 
 	GameObject target;
 
