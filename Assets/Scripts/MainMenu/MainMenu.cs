@@ -1,8 +1,9 @@
 ﻿using GooglePlayGames;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 using System.Collections;
 
 public class MainMenu : MonoBehaviour {
@@ -21,7 +22,7 @@ public class MainMenu : MonoBehaviour {
 
 	[Header("Settings Sliders")]
 	public Slider AcceleratorSensitivity;
-	public Slider AcceleratorDeadzone;
+	public Slider AcceleratorDeadzone, VolumeMaster, VolumeMusic, VolumeEffects;
 
 	[Header("Details Parent")]
 	public GameObject[] allDetails;
@@ -181,6 +182,12 @@ public class MainMenu : MonoBehaviour {
 	public void Settings_ChangeAcceleratorSensitivity() {
 
 		GameManager.instance.acceleratorSensitivity = AcceleratorSensitivity.value;
+
+	}
+
+	public void Settings_ChangeVolumeMaster(AudioMixerGroup mixer) {
+
+		//Settings_ChangeVolumeMaster.value;
 
 	}
 

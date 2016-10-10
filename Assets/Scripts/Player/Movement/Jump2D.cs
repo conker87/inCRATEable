@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 using System.Collections;
 
 public class Jump2D : MonoBehaviour {
@@ -8,6 +9,9 @@ public class Jump2D : MonoBehaviour {
 	[SerializeField]
 	Collider2D groundHit;
 	JumpPlatform2D jp;
+
+	public AudioClip jump, JumpHigher;
+	AudioSource audioSource;
 
 	public float jumpHeight = 500f, originalJumpHeight;
 	public Transform[] groundCheck;
@@ -24,6 +28,8 @@ public class Jump2D : MonoBehaviour {
 	bool justUnpaused = false;
 
 	void Start () {
+
+		audioSource = GetComponent<AudioSource> ();
 
 		rigidbody2d = GetComponent<Rigidbody2D> ();
 
@@ -76,6 +82,16 @@ public class Jump2D : MonoBehaviour {
 						if (grounded) {
 
 							Jump (jumpHeight);
+
+//							if (jumpHeight < 750f) {
+//
+//								audioSource.PlayOneShot (jump);
+//
+//							} else {
+//
+//								audioSource.PlayOneShot (JumpHigher);
+//
+//							}
 
 							jumpHeight = originalJumpHeight;
 
