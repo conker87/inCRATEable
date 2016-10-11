@@ -26,11 +26,13 @@ public class InfiniteModeManager : MonoBehaviour {
 
 	float startScoringAtPosition = 20f, scoringMultiplier = 10f, currentScore;
 
-
+	AudioSource audioSource;
 
 	void Awake() {
 
 		Singleton ();
+
+		audioSource = GetComponent<AudioSource> ();
 
 	}
 
@@ -55,6 +57,12 @@ public class InfiniteModeManager : MonoBehaviour {
 	}
 
 	void Update() {
+
+		if (GameManager.instance.music && !audioSource.isPlaying) {
+
+			audioSource.Play ();
+
+		}
 
 		if (!GameManager.instance.gameOver) {
 

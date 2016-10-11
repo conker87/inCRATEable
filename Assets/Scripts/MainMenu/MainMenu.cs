@@ -23,9 +23,13 @@ public class MainMenu : MonoBehaviour {
 	[Header("Settings Sliders")]
 	public Slider AcceleratorSensitivity;
 	public Slider AcceleratorDeadzone, VolumeMaster, VolumeMusic, VolumeEffects;
+	public Toggle Music;
 
 	[Header("Details Parent")]
 	public GameObject[] allDetails;
+
+	AudioSource audioSource;
+	bool beginMusic = false;
 
 	void Start() {
 
@@ -33,9 +37,22 @@ public class MainMenu : MonoBehaviour {
 
 		ResetUIElements ();
 
+		audioSource = GetComponent<AudioSource> ();
+
 	}
 
 	void Update() {
+
+		if (GameManager.instance.music && !audioSource.isPlaying) {
+
+			audioSource.Play ();
+
+		}
+		if (!GameManager.instance.music) {
+
+			audioSource.Pause ();
+
+		}
 
 		if (Social.localUser.authenticated) {
 
@@ -100,6 +117,7 @@ public class MainMenu : MonoBehaviour {
 		InfiniteMode_Brutal.isOn = GameManager.instance.infiniteMode_Brutal;
 		InfiniteMode_Rainbow.isOn = GameManager.instance.infiniteMode_Rainbow;
 		Difficulty.value = GameManager.instance.difficulty;
+		Music.isOn = GameManager.instance.music;
 
 	}
 
@@ -182,6 +200,12 @@ public class MainMenu : MonoBehaviour {
 	public void Settings_ChangeAcceleratorSensitivity() {
 
 		GameManager.instance.acceleratorSensitivity = AcceleratorSensitivity.value;
+
+	}
+
+	public void Settings_ToggleMusic() {
+
+		GameManager.instance.music = Music.isOn;
 
 	}
 

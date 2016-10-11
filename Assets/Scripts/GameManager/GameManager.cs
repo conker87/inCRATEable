@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 
 	public string currentState = "MainMenu";
 
-	public bool gameOver = false, paused = false, authenticating = false;
+	public bool gameOver = false, paused = false, authenticating = false, music;
 
 	public bool infiniteMode_Brutal = false, infiniteMode_Rainbow = false;
 	public int difficulty = 1;
