@@ -156,7 +156,7 @@ public class InfiniteModeManager : MonoBehaviour {
 
 					}
 
-					if (Random.value < 0.5f && Advertisement.IsReady ()) {
+					if (Random.value < 0.9f && Advertisement.IsReady ()) {
 
 						Advertisement.Show ();
 
